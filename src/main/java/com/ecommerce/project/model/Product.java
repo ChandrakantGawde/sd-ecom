@@ -6,12 +6,15 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "products")
+@ToString
 public class Product {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -24,6 +27,7 @@ public class Product {
     @NotBlank
     @Size(min = 6, message = "Product description must contain attlist six characters")
     private String description;
+
     private String image;
     private Integer quantity;
     private double price;
@@ -33,4 +37,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User user;
 }
