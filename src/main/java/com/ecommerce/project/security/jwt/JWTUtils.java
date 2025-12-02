@@ -108,4 +108,12 @@ public class JWTUtils {
         }
         return false;
     }
+
+    public ResponseCookie getCleanJwtCookie(){
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null)
+                .path("/api")
+                .build();
+
+        return cookie;
+    }
 }
