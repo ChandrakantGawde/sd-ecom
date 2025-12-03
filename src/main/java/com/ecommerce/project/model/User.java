@@ -62,6 +62,10 @@ public class User {
                 inverseJoinColumns = @JoinColumn( name = "address_id"))
     private Set<Address> addresses = new HashSet<>();
 
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    private Cart cart;
+
     @ToString.Exclude // Here we remove the products from to-string method so we can only print User
     @OneToMany(mappedBy = "user",
                cascade = {CascadeType.PERSIST, CascadeType.MERGE},
