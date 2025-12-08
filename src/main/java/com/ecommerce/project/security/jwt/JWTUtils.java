@@ -34,15 +34,15 @@ public class JWTUtils {
     private String jwtCookie;
 
     // Getting JWT From Header
-//     public String getJwtFromHeader(HttpServletRequest request){
-//         String bearerToken = request.getHeader("Authorization");
-//         logger.debug("Authorization Header:{}", bearerToken);
-//
-//         if (bearerToken != null && bearerToken.startsWith("Bearer ")){
-//             return bearerToken.substring(7); // Remove "Bearer " word from Token
-//         }
-//         return null;
-//     }
+     public String getJwtFromHeader(HttpServletRequest request){
+         String bearerToken = request.getHeader("Authorization");
+         logger.debug("Authorization Header:{}", bearerToken);
+
+         if (bearerToken != null && bearerToken.startsWith("Bearer ")){
+             return bearerToken.substring(7); // Remove "Bearer " word from Token
+         }
+         return null;
+     }
 
    public String getJwtFromCookies(HttpServletRequest request){
        Cookie cookie = WebUtils.getCookie(request, jwtCookie);
@@ -59,6 +59,7 @@ public class JWTUtils {
                .path("/api")
                .maxAge(24*60*60)
                .httpOnly(false)
+               .secure(false)
                .build();
 
        return cookie;

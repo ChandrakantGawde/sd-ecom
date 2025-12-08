@@ -56,10 +56,24 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response); // Pass to the spring security
     }
 
+//    private String parseJwt(HttpServletRequest request) {
+////        String jwt = jwtUtils.getJwtFromHeader(request);
+//        String jwt = jwtUtils.getJwtFromCookies(request);
+//        logger.debug("AuthTokenFilter called for jwt: {}", jwt);
+//        return jwt;
+//    }
+
     private String parseJwt(HttpServletRequest request) {
-//        String jwt = jwtUtils.getJwtFromHeader(request);
-        String jwt = jwtUtils.getJwtFromCookies(request);
-        logger.debug("AuthTokenFilter called for jwt: {}", jwt);
-        return jwt;
+        String jwtFromCookie = jwtUtils.getJwtFromCookies(request);
+        logger.debug("AuthTokenFilter called for jwt from Cookie: {}", jwtFromCookie);
+        if (jwtFromCookie != null)
+            return jwtFromCookie;
+
+        String jwtFromHeader = jwtUtils.getJwtFromHeader(request);
+        logger.debug("AuthTokenFilter called for jwt from Header: {}", jwtFromHeader);
+        if (jwtFromHeader != null)
+            return jwtFromHeader;
+
+        return null;
     }
 }
